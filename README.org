@@ -1,0 +1,4 @@
+#+title: elm-watch
+This is a nix flake wrapper around [[https://lydell.github.io/elm-watch/][elm-watch]]. You can run =nix run= on this flake to invoke elm-watch, or add it as a build dependency.
+
+To package a new version of elm-watch, one needs to regenerate the =package-lock.json= file by deleting it from the main elm-watch repository along with the =node_modules= directory, and running =npm install=. The =postinstall= section in =package.json= then needs to be set to the empty string =""= . These changes then need to be saved as a patch, overwriting this repositories [[file:packages.patch][packages.patch]] file. Then the version number in the flake must be updated, along with the hash in =elm-watch-repo=.
