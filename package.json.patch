@@ -1,0 +1,13 @@
+diff --git a/package.json b/package.json
+index aa3e33f..aa74ee0 100644
+--- a/package.json
++++ b/package.json
+@@ -3,7 +3,7 @@
+   "name": "build",
+   "type": "commonjs",
+   "scripts": {
+-    "postinstall": "elm-tooling install",
++    "postinstall": "",
+     "pretest": "run-pty --auto-exit % prettier --check . % eslint . --report-unused-disable-directives % tsc % node -r esbuild-register scripts/EnsureTestDependencies.ts % npm run build",
+     "test": "jest --coverage",
+     "build": "node -r esbuild-register scripts/Build.ts"

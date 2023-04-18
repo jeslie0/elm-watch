@@ -11,9 +11,14 @@
       url = github:nix-community/npmlock2nix;
       flake = false;
     };
+    npm-fix = {
+      url = github:jeslie0/npm-lockfile-fix;
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows ="flake-utils";
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, npmlock2nix }:
+  outputs = { self, nixpkgs, flake-utils, npmlock2nix, npm-fix }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
@@ -36,8 +41,13 @@
           pname = "elm-watch-src";
           version = elm-watch-version;
           src = elm-watch-repo;
-          patches = [ ./packages.patch ];
-          installPhase = "mkdir $out; cp -r * $out";
+          patches = [ ./package.json.patch ];
+          installPhase = ''
+                       mkdir $out
+                       cp -r * $out
+                       rm $out/package-lock.json
+                       cp ${./package-lock.json} $out/package-lock.json
+                       '';
         };
         elm-watch = pkgs.npmlock2nix.v2.build {
             src = patched-elm-watch;
@@ -61,6 +71,10 @@
                          cp elm-watch $out/bin
                          '';
           };
+        };
+
+        devShell = pkgs.mkShell {
+          packages = [npm-fix.packages.${system}.default];
         };
       }
     );

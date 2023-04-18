@@ -31,6 +31,29 @@
         "type": "github"
       }
     },
+    "npm-fix": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1681681690,
+        "narHash": "sha256-mI2ND49vInMbeXSMQDp8y7Prjh53W4RlpixWRlH2Lio=",
+        "owner": "jeslie0",
+        "repo": "npm-lockfile-fix",
+        "rev": "1a3799d0b8b9ed5b51f39bd878a3ba2d8ac5656a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jeslie0",
+        "repo": "npm-lockfile-fix",
+        "type": "github"
+      }
+    },
     "npmlock2nix": {
       "flake": false,
       "locked": {
@@ -51,6 +74,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
+        "npm-fix": "npm-fix",
         "npmlock2nix": "npmlock2nix"
       }
     }

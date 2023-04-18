@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+wget https://raw.githubusercontent.com/lydell/elm-watch/v1.1.2/package-lock.json
+npm-lockfile-fix package-lock.json
