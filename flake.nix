@@ -28,20 +28,25 @@
           inherit system;
           overlays =
             [ (final: prev: {
-              npmlock2nix = import npmlock2nix { pkgs = prev; };
+              # npmlock2nix's internal-v2.nix still requests the long-removed
+              # `nodejs-16_x` attribute. Alias it to a current Node so the
+              # auto-callPackage lookup succeeds. We then override the actual
+              # nodejs used for the build below via the `nodejs` argument.
+              nodejs-16_x = prev.nodejs_22;
+              npmlock2nix = import npmlock2nix { pkgs = final; };
             }) ];
         }
       );
 
       elm-watch-version =
-        "v1.1.2";
+        "v1.2.7";
 
       elm-watch-repo = system:
         nixpkgsFor.${system}.fetchFromGitHub {
           owner = "lydell";
           repo = "elm-watch";
           rev = elm-watch-version;
-          hash = "sha256-TOkX1V64uXJRBZzZccrKuodBOyXLOMXwZu3hsVvjaWI=";
+          hash = "sha256-+QwWRneaTaxVKSsNF/qmpH4580gV0XZNBqUJ2uLzp2I=";
         };
 
       patched-elm-watch = system:
@@ -61,6 +66,7 @@
       elm-watch = system:
         nixpkgsFor.${system}.npmlock2nix.v2.build {
           src = patched-elm-watch system;
+          nodejs = nixpkgsFor.${system}.nodejs_22;
           installPhase = "mkdir $out; cp -r . $out";
           buildCommands = [ "npm run build" ];
         };
